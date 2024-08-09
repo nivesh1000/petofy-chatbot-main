@@ -1,0 +1,7 @@
+requests
+beautifulsoup4
+lxml
+chromadb
+sentence-transformers
+pysqlite3-binary
+openai
