@@ -3,9 +3,13 @@ from azure.ai.contentsafety.models import TextCategory
 from azure.core.credentials import AzureKeyCredential
 from azure.core.exceptions import HttpResponseError
 from azure.ai.contentsafety.models import AnalyzeTextOptions
+from dotenv import load_dotenv
+import os
 
-key = "c1f73014bf3b4b4ab523305c237f6e3d"
-endpoint = "https://content-safety-check.cognitiveservices.azure.com/"
+load_dotenv()
+
+key = os.getenv('AZURE_CONTENT_SAFETY_KEY')
+endpoint = os.getenv('AZURE_CONTENT_SAFETY_ENDPOINT')
 
 client = ContentSafetyClient(endpoint, AzureKeyCredential(key))
 def analyser(prompt):

@@ -1,23 +1,26 @@
 from openai import AzureOpenAI
+from dotenv import load_dotenv
+import os
 
-
+load_dotenv()
 
 class Response:
     def __init__(self) -> None:
         self.client = AzureOpenAI(
-        api_key="b614b5b86d9e4baba98dbc28b802ed26",
-        api_version="2024-02-01",
-        azure_endpoint="https://petofy-openai.openai.azure.com/") 
+            api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+            api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
+            azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT")
+        ) 
 
-    def chat_completion(self,user_query,similarity_result):
+    def chat_completion(self, user_query, similarity_result):
         with open('system_prompt.txt', 'r') as file:
             base_prompt = file.read()   
 
         deployment = "gpt-35-turbo"
 
         final_prompt = base_prompt.format(
-        similarity_result=similarity_result,
-        user_query=user_query
+            similarity_result=similarity_result,
+            user_query=user_query
         )
         completion = self.client.chat.completions.create(
             model=deployment,
@@ -33,4 +36,3 @@ class Response:
             stream=False
         )
         return completion.choices[0].message.content
-    
