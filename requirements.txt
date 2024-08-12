@@ -5,4 +5,7 @@ chromadb
 sentence-transformers
 pysqlite3-binary
 openai
+azure-ai-contentsafety 
+azure-core
+
 
