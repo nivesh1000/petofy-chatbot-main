@@ -14,9 +14,8 @@ class Response:
 
     def chat_completion(self, user_query, similarity_result):
         with open('system_prompt.txt', 'r') as file:
-            base_prompt = file.read()   
-
-        deployment = "gpt-35-turbo"
+            base_prompt = file.read()
+        deployment = os.getenv("DEPLOYEMENT")
 
         final_prompt = base_prompt.format(
             similarity_result=similarity_result,

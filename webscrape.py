@@ -1,13 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-urls = [
-    "https://www.petofy.com/online-pet-health-record/membership-pricing",
-    "https://petofy.com/pet-microchip-registry",
-    "https://petofy.com/VetOnCall"
-]
-
-def webscrape(file_path,urls):
+def webscrape(file_path, urls):
     with open(file_path, 'w') as file:
         for url in urls:
             file.write(f"----Content from {url}---- \n")

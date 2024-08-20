@@ -10,12 +10,15 @@ load_dotenv()
 db_name = os.getenv("DB_NAME")
 dbloc = os.getenv("DB_LOC")
 scrapedataloc = os.getenv("SCRAPE_DATA_LOC")
-urls = os.getenv("urls")
+urls = [
+    "https://www.petofy.com/online-pet-health-record/membership-pricing",
+    "https://petofy.com/pet-microchip-registry",
+    "https://petofy.com/VetOnCall"
+]
 
 os.environ["TOKENIZERS_PARALLELISM"] = os.getenv("TOKENIZERS_PARALLELISM")
 
-if os.path.getsize(scrapedataloc) == 0:
-    webscrape(scrapedataloc,urls)
+webscrape(scrapedataloc, urls)
 
 cobj = Chromaappender(db_name, dbloc, scrapedataloc)
 robj = Response()

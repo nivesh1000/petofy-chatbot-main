@@ -1,8 +1,9 @@
 import chromadb
 from chunkmaker import read_chunks
 
+
 class Chromaappender:
-    def __init__(self,db_name,dblocation,sdloc) -> None:
+    def __init__(self, db_name, dblocation, sdloc) -> None:
         self.db_name = db_name
         self.dbloc = dblocation
         self.sdloc = sdloc
@@ -22,15 +23,15 @@ class Chromaappender:
         
     def similarity_search(self,query_text):
         self.collection = self.client.get_collection(name=self.db_name)
-        self.query_text=query_text
+        self.query_text = query_text
         results = self.collection.query(
-        query_texts=[query_text], n_results=2, include=["documents", "distances"])  
+        query_texts=[query_text], n_results=2, include=["documents", "distances"]
+        )  
         documents = results["documents"]
         s = ""
         for doc in documents:
-            for i in doc:
-                s = s + i
-        return s 
+            s += doc[0]
+        return s
 
 
 
