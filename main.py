@@ -1,4 +1,4 @@
-from webscrape import WebScrape
+from webscrape import webscrape
 import os
 from chroma import Chromaappender
 from response import Response
@@ -10,12 +10,12 @@ load_dotenv()
 db_name = os.getenv("DB_NAME")
 dbloc = os.getenv("DB_LOC")
 scrapedataloc = os.getenv("SCRAPE_DATA_LOC")
-sitemap_url = os.getenv("SITEMAP_URL")
+urls = os.getenv("urls")
 
 os.environ["TOKENIZERS_PARALLELISM"] = os.getenv("TOKENIZERS_PARALLELISM")
 
 if os.path.getsize(scrapedataloc) == 0:
-    WebScrape(sitemap_url, scrapedataloc)
+    webscrape(scrapedataloc,urls)
 
 cobj = Chromaappender(db_name, dbloc, scrapedataloc)
 robj = Response()
