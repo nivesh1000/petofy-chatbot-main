@@ -32,8 +32,3 @@ class Chromaappender:
         for doc in documents:
             s += doc[0]
         return s
-
-
-
-
- 
