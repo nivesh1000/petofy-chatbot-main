@@ -6,7 +6,7 @@ urls = [
     "https://petofy.com/pet-microchip-registry",
     "https://petofy.com/VetOnCall"
 ]
-file_path= "/home/oem/Documents/petofy-chatbot-main/staticdata/crawled_data.txt"
+file_path= "staticdata/crawled_data.txt"
 with open(file_path, 'w') as file:
     for url in urls:
         file.write(f"----Content from {url}---- \n")
