@@ -1,26 +1,17 @@
-from webscrape import webscrape
-import os
-from chroma import Chromaappender
+# main.py
+from schedular import initialize_chromaappender, start_scheduler
 from response import Response
 from pydantics import UserModel, ValidationError
+import os
 from dotenv import load_dotenv
+import threading
+import time
 
 load_dotenv()
 
-db_name = os.getenv("DB_NAME")
-dbloc = os.getenv("DB_LOC")
-scrapedataloc = os.getenv("SCRAPE_DATA_LOC")
-urls = [
-    "https://www.petofy.com/online-pet-health-record/membership-pricing",
-    "https://petofy.com/pet-microchip-registry",
-    "https://petofy.com/VetOnCall"
-]
-
 os.environ["TOKENIZERS_PARALLELISM"] = os.getenv("TOKENIZERS_PARALLELISM")
 
-webscrape(scrapedataloc, urls)
-
-cobj = Chromaappender(db_name, dbloc, scrapedataloc)
+cobj = initialize_chromaappender()
 robj = Response()
 
 code_index = {
@@ -39,7 +30,10 @@ code_index = {
 }
 
 def main() -> None:
-    while(True):
+    scheduler_thread = threading.Thread(target=start_scheduler, daemon=True)
+    scheduler_thread.start()
+
+    while True:
         user_query = input("Query>> ")
         if user_query == 'exit':
             break
@@ -51,9 +45,12 @@ def main() -> None:
             if code in code_index:
                 print(f"Response>> {code_index[code]}")
             else:
-                similar_results = cobj.similarity_search(user_query)
-                response = robj.chat_completion(user_query, similar_results)
-                print(f"Response>> {response}")
+                if cobj is not None:
+                    similar_results = cobj.similarity_search(user_query)
+                    response = robj.chat_completion(user_query, similar_results)
+                    print(f"Response>> {response}")
+                else:
+                    print("Response>> Chromaappender is not initialized yet.")
         except ValidationError as e:
             print(f"Validation error: {e}")
 
