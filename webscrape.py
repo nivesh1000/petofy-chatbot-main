@@ -8,11 +8,10 @@ def webscrape(file_path, urls):
             response = requests.get(url)
             if response.status_code == 200:
                 soup = BeautifulSoup(response.text, 'html.parser')
-                elements = soup.find_all(class_='content-wrapper')
-
-                for element in elements:
-                    for tag in element.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'label']):
-                        file.write(tag.get_text(strip=True) + '\n')
+                elements = soup.find(class_='content-wrapper')
+                tags = elements.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'label'])
+                for tag in tags:
+                    file.write(tag.get_text(strip=True) + '\n')
                 file.write('\n')
             else:
                 file.write(f"Failed to retrieve the webpage {url}. Status code: {response.status_code}\n")
