@@ -9,6 +9,7 @@ class Chromaappender:
         self.sdloc = sdloc
         self.client = chromadb.PersistentClient(path=f"{self.dbloc}")
         if self.exist_check() != 0:
+            
             self.collection_add()
 
     def collection_add(self):
