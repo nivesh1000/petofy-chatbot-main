@@ -18,17 +18,16 @@ urls = [
 db_name = os.getenv("DB_NAME")
 dbloc = os.getenv("DB_LOC")
 
-def delete_and_recreate_static_data():
+
+def initialize_chromaappender():
     if os.path.exists(dbloc):
         shutil.rmtree(dbloc)
     os.makedirs(dbloc)
     print(f"{dbloc} folder deleted and recreated.")
-
-def initialize_chromaappender():
-    delete_and_recreate_static_data() 
     webscrape(scrapedataloc, urls)
     print(f"Scraping and appending run completed at {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     return Chromaappender(db_name, dbloc, scrapedataloc)
+
 
 def start_scheduler():
     schedule.every(6).minutes.do(initialize_chromaappender)
