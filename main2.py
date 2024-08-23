@@ -47,8 +47,8 @@ def completion():
 def generate_response():
     query="what is microchip?"
     search_engine=BeckHealthVectorSearch()
-    search_result=search_engine.searchvector(query=query,k=5,score_threshold=0.1)
-    result_document=search_result
+    search_result=search_engine.searchvector(query=query,k=5,score_threshold=0.6)
+    result_document=[doc[0].page_content for doc in search_result]
     print(result_document)
 
 generate_response()
