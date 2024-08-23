@@ -5,7 +5,6 @@ from langchain_community.vectorstores.azuresearch import AzureSearch
 from langchain_openai import AzureOpenAIEmbeddings
 from dotenv import load_dotenv
 load_dotenv()
-from vector import generate_embeddings
 
  
  

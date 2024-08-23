@@ -7,6 +7,7 @@ openai
 azure-ai-contentsafety 
 azure-core
 python-dotenv
-
-
-
+langchain_community
+langchain_openai
+azure-search-documents
+azure.identity
