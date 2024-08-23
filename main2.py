@@ -3,52 +3,40 @@ import os
 from dotenv import load_dotenv
 from vector2 import BeckHealthVectorSearch
 load_dotenv()
+from response import Response
+robj=Response()
 
-def completion():
-    service_endpoint =os.getenv("SERVICE_ENDPOINT")
-    key = os.getenv("RESOURCE_KEY")
-    deployment = "gpt-35-turbo"
+def chat_completion(self, user_query, similarity_result):
+    with open('system_prompt.txt', 'r') as file:
+        base_prompt = file.read()
+    deployment = os.getenv("DEPLOYEMENT")
 
-    client = AzureOpenAI(
-            api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-            api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
-            azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT")
-        ) 
-
-    completion = client.chat.completions.create(
+    final_prompt = base_prompt.format(
+        similarity_result=similarity_result,
+        user_query=user_query
+    )
+    completion = self.client.chat.completions.create(
         model=deployment,
         messages=[
-            {
-                "role": "user",
-                "content": "price of mircochip",
-            },
+            {"role": "user", "content": final_prompt},
         ],
-        extra_body={
-            "data_sources": [
-                {
-                    "type": "azure_search",
-                    "parameters": {
-                        "endpoint": service_endpoint,
-                        "index_name": "petofy-vector-data",
-                        "authentication": {
-                            "type": "api_key",
-                            "key": key,
-                        },
-                    },
-                }
-            ],
-        },
+        max_tokens=800,
+        temperature=0.7,
+        top_p=0.95,
+        frequency_penalty=0,
+        presence_penalty=0,
+        stop=None,
+        stream=False
     )
-
-    print(completion.choices[0].message.content)
+    return completion.choices[0].message.content
 
 # completion()
 
-def generate_response():
-    query="what is microchip?"
+def generate_response(query):
     search_engine=BeckHealthVectorSearch()
     search_result=search_engine.searchvector(query=query,k=5,score_threshold=0.1)
-    result_document=search_result
-    print(result_document)
-
-generate_response()
+    similar_queries = [doc[0].page_content for doc in search_result]
+    return robj.chat_completion(query,similar_queries)
+    
+query=input("query>> ")
+print(f"Response>> {generate_response(query)}")
