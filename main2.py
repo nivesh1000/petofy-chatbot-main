@@ -6,13 +6,15 @@ load_dotenv()
 from response import Response
 robj=Response()
 
-# completion()
 
 def generate_response(query):
     search_engine=BeckHealthVectorSearch()
     search_result=search_engine.searchvector(query=query,k=5,score_threshold=0.1)
     similar_queries = [doc[0].page_content for doc in search_result]
     return robj.chat_completion(query,similar_queries)
-    
-query=input("query>> ")
-print(f"Response>> {generate_response(query)}")
+
+while True:   
+    query=input("query>> ")
+    if query=="byy":
+        break
+    print(f"Response>> {generate_response(query)}")
