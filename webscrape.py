@@ -1,7 +1,9 @@
+import os
 import requests
 from bs4 import BeautifulSoup
 
 def webscrape(file_path, urls):
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, 'w') as file:
         for url in urls:
             file.write(f"----Content from {url}---- \n")

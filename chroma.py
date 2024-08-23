@@ -21,7 +21,7 @@ class Chromaappender:
         existing_collections = self.client.list_collections()
         if self.db_name in [col.name for col in existing_collections]:
             return 0
-        
+       
     def similarity_search(self,query_text):
         self.collection = self.client.get_collection(name=self.db_name)
         self.query_text = query_text
