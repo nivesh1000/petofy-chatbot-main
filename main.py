@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-from vector2 import VectorSearch
+from vector import VectorSearch
 load_dotenv()
 from response import Response
 robj=Response()
