@@ -1,9 +1,12 @@
 from openai import AzureOpenAI
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 client = AzureOpenAI(
-        api_key="b614b5b86d9e4baba98dbc28b802ed26",
+        api_key=os.getenv("AZURE_OPENAI_API_KEY"),
         api_version="2024-02-01",
-        azure_endpoint="https://petofy-openai.openai.azure.com/",
+        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
     )
 
 vectors = []

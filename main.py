@@ -1,11 +1,9 @@
-# main.py
 from schedular import initialize_chromaappender, start_scheduler
 from response import Response
 from pydantics import UserModel, ValidationError
 import os
 from dotenv import load_dotenv
 import threading
-import time
 
 load_dotenv()
 

@@ -8,7 +8,7 @@ load_dotenv()
 
  
  
-class BeckHealthAIEmbeddings(AzureOpenAIEmbeddings):
+class Embeddings(AzureOpenAIEmbeddings):
  
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -23,17 +23,17 @@ class BeckHealthAIEmbeddings(AzureOpenAIEmbeddings):
         return self._embed_documents(input)
  
  
-class BeckHealthVectorSearch:
+class VectorSearch:
  
     def __init__(self):
-        self.embeddings = BeckHealthAIEmbeddings(
+        self.embeddings = Embeddings(
             azure_deployment="text-embedding",
             openai_api_version="2024-05-01-preview",
             azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
             api_key=os.getenv("AZURE_OPENAI_API_KEY"),
         )
  
-    def _getbeckhealthvectorstore(self):
+    def client(self):
         return AzureSearch(
             azure_search_endpoint=os.getenv("SERVICE_ENDPOINT"),
             azure_search_key=os.getenv("RESOURCE_KEY"),
@@ -42,7 +42,7 @@ class BeckHealthVectorSearch:
         )
  
     def searchvector(self, query, *, k=5, score_threshold=0.6):
-        vector_store = self._getbeckhealthvectorstore()
+        vector_store = self.client()
  
         return vector_store.similarity_search_with_relevance_scores(
             query=query,
