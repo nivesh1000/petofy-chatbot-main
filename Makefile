@@ -20,5 +20,5 @@ install:
 	@echo "!!!Activate the virtual environment by running: source $(VENV_NAME)/bin/activate"
 
 run:
-	@echo "Running main2.py"
-	@$(PYTHON) main2.py
+	@echo "Running main.py"
+	@$(PYTHON) main.py
