@@ -19,4 +19,4 @@ def main() -> None:
         print(f"Response>> {generate_response(query)}")
 
 if __name__ == "__main__":
-    main()        
+    main()

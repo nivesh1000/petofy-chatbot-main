@@ -37,7 +37,7 @@ class VectorSearch:
         return AzureSearch(
             azure_search_endpoint=os.getenv("SERVICE_ENDPOINT"),
             azure_search_key=os.getenv("RESOURCE_KEY"),
-            index_name='petofy-vector-data',
+            index_name=os.getenv("INDEX_NAME"),
             embedding_function=self.embeddings,
         )
  
