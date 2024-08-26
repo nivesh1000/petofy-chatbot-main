@@ -1,7 +1,9 @@
 from dotenv import load_dotenv
 from vector import VectorSearch
-load_dotenv()
+import threading
 from response import Response
+from scheduler import start_scheduler
+load_dotenv()
 robj=Response()
 
 
@@ -12,6 +14,8 @@ def generate_response(query):
     return robj.chat_completion(query,similar_queries)
 
 def main() -> None:
+    scheduler_thread = threading.Thread(target=start_scheduler, daemon=True)
+    scheduler_thread.start()
     while True:   
         query=input("query>> ")
         if query=="exit":
