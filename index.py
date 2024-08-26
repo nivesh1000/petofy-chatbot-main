@@ -16,9 +16,8 @@ from azure.search.documents.indexes.models import (
     VectorSearchProfile,
 )
 from azure.search.documents import SearchClient
-from openai import AzureOpenAI
 from chunkmaker import read_chunks
-from vector import generate_embeddings
+from embeddingmaker import generate_embeddings
 
 
 load_dotenv()
@@ -81,29 +80,25 @@ def create_index():
     result = index_client.create_or_update_index(index)
 
     print(f" {result.name} created")
-    # Close the search client
     index_client.close()
 
 
 def upload_to_index():
-    # Reinitialize the client to interact with the newly created index
     search_client = SearchClient(
         endpoint=service_endpoint,
-        index_name="petofy-vector-data",
+        index_name=os.getenv("INDEX_NAME"),
         credential=AzureKeyCredential(key),
     )
-    for i,chunk in enumerate(read_chunks("staticdata/crawled_data.txt")):
+    loc=os.getenv("SCRAPE_DATA_LOC")
+    for i,chunk in enumerate(read_chunks(loc)):
         vectors=generate_embeddings(chunk)
         final_chunk=[{
                 "id": str(i),
                 "text_chunk": str(chunk),
                 "embedding": vectors,
             }]
-        print(final_chunk)
-
-        print(f"{i} chunks uploaded")
-        # Upload the batch to the Azure Search index
-        result = search_client.upload_documents(documents=final_chunk)
+        search_client.upload_documents(documents=final_chunk)
+        print("Data uploaded to index successfully")
         
         
 
