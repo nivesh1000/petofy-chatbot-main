@@ -31,5 +31,3 @@ def webscrape(file_path, urls):
 
     print("Scraping completed and data has been written to 'crawled_data.txt'.")
 
-
-webscrape(file_path=scrapedataloc, urls=urls)

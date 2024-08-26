@@ -52,5 +52,3 @@ def start_scheduler():
         time.sleep(1)
 
 
-if __name__ == "__main__":
-    start_scheduler()
