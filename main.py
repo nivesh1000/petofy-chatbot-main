@@ -5,11 +5,8 @@ from pydantics import UserModel, ValidationError
 import os
 from dotenv import load_dotenv
 import threading
-import time
 
 load_dotenv()
-
-os.environ["TOKENIZERS_PARALLELISM"] = os.getenv("TOKENIZERS_PARALLELISM")
 
 cobj = initialize_chromaappender()
 robj = Response()
