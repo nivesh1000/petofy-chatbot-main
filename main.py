@@ -1,8 +1,6 @@
-# main.py
 from schedular import initialize_chromaappender, start_scheduler
 from response import Response
 from pydantics import UserModel, ValidationError
-import os
 from dotenv import load_dotenv
 import threading
 
@@ -35,10 +33,7 @@ def main() -> None:
         if user_query == 'exit':
             break
         try:
-            code = UserModel(user_query=user_query)
-            code = str(code)
-            code = code[len(code)-5:len(code)]
-            code = code[1:len(code)-1]
+            code = str(UserModel(user_query=user_query))[-4:-1]
             if code in code_index:
                 print(f"Response>> {code_index[code]}")
             else:
