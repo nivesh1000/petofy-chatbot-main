@@ -3,6 +3,7 @@ from vector import VectorSearch
 import threading
 from response import Response
 from scheduler import start_scheduler
+import argparse
 load_dotenv()
 robj=Response()
 
@@ -16,9 +17,19 @@ def generate_response(query):
 def main() -> None:
     scheduler_thread = threading.Thread(target=start_scheduler, daemon=True)
     scheduler_thread.start()
-    while True:   
-        query=input("query>> ")
-        if query=="exit":
+
+    parser = argparse.ArgumentParser(description="Script that processes queries using a scheduler.")
+    parser.add_argument('-q', '--query', type=str, help='Query to be processed', required=False)
+    args = parser.parse_args()
+
+    if args.query:
+        if args.query.lower() == "exit":
+            return
+        print(f"Response>> {generate_response(args.query)}")
+    
+    while True:
+        query = input("Query>> ")
+        if query.lower() == "exit":
             break
         print(f"Response>> {generate_response(query)}")
 
