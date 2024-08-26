@@ -98,14 +98,7 @@ def upload_to_index():
                 "embedding": vectors,
             }]
         search_client.upload_documents(documents=final_chunk)
-        print("Data uploaded to index successfully")
-        
-        
-
-    
     print("Documents uploaded")
-
-    # Close the search client
     search_client.close()
 create_index()
 upload_to_index()
