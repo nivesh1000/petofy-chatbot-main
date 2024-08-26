@@ -27,8 +27,8 @@ class VectorSearch:
  
     def __init__(self):
         self.embeddings = Embeddings(
-            azure_deployment="text-embedding",
-            openai_api_version="2024-05-01-preview",
+            azure_deployment=os.getenv("RESOURCE_DEPLOYEMENT_NAME"),
+            openai_api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
             azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
             api_key=os.getenv("AZURE_OPENAI_API_KEY"),
         )
