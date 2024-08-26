@@ -23,6 +23,7 @@ def main() -> None:
     args = parser.parse_args()
 
     if args.query:
+        print(args.query)
         if args.query.lower() == "exit":
             return
         print(f"Response>> {generate_response(args.query)}")

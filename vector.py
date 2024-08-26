@@ -22,7 +22,7 @@ class VectorSearch:
             azure_search_endpoint=os.getenv("SERVICE_ENDPOINT"),
             azure_search_key=os.getenv("RESOURCE_KEY"),
             index_name=os.getenv("INDEX_NAME"),
-            embedding_function=self.embeddings,  # Directly using the AzureOpenAIEmbeddings instance
+            embedding_function=self.embeddings,
         )
 
     def searchvector(self, query, *, k=5, score_threshold=0.6):
