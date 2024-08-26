@@ -43,16 +43,17 @@ def initialize_vectorization():
     create_index()
     upload_to_index()
 
-def check_date_and_run():
-    specific_day = 26
-    today = datetime.now()
 
+def check_date_and_run():
+    specific_day = 1
+    today = datetime.now()
     if today.day == specific_day:
         initialize_vectorization()
+
 
 def start_scheduler():
     schedule.every().day.at("00:00").do(check_date_and_run)
 
     while True:
         schedule.run_pending()
-        time.sleep(60)
+        time.sleep(86400)
