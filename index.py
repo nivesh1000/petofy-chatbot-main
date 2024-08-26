@@ -100,5 +100,3 @@ def upload_to_index():
         search_client.upload_documents(documents=final_chunk)
     print("Documents uploaded")
     search_client.close()
-create_index()
-upload_to_index()
