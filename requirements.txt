@@ -7,6 +7,6 @@ openai
 azure-ai-contentsafety 
 azure-core
 python-dotenv
-
+schedule
 
 
