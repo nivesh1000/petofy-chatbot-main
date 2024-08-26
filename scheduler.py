@@ -1,7 +1,7 @@
 from webscrape import webscrape
 import schedule
 import os
-import datetime
+from datetime import datetime
 from dotenv import load_dotenv
 import time
 import shutil
@@ -38,17 +38,21 @@ def delete_existing_index():
 
 def initialize_vectorization():
     webscrape(scrapedataloc, urls)
-    print(f"Scraping completed at {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"Scraping completed at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     delete_existing_index()
     create_index()
     upload_to_index()
 
+def check_date_and_run():
+    specific_day = 26
+    today = datetime.now()
 
+    if today.day == specific_day:
+        initialize_vectorization()
 
 def start_scheduler():
-    schedule.every(2).minutes.do(initialize_vectorization)
+    schedule.every().day.at("00:00").do(check_date_and_run)
+
     while True:
         schedule.run_pending()
-        time.sleep(1)
-
-
+        time.sleep(60)

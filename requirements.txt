@@ -11,3 +11,4 @@ langchain_community
 langchain_openai
 azure-search-documents
 azure.identity
+datetime

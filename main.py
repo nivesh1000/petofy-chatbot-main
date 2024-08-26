@@ -2,7 +2,8 @@ from dotenv import load_dotenv
 from vector import VectorSearch
 import threading
 from response import Response
-from scheduler import start_scheduler
+from scheduler import start_scheduler, initialize_vectorization
+import time
 load_dotenv()
 robj=Response()
 
