@@ -1,5 +1,17 @@
+import os
 import requests
 from bs4 import BeautifulSoup
+from dotenv import load_dotenv
+
+load_dotenv()
+
+scrapedataloc = os.getenv("SCRAPE_DATA_LOC")
+urls = [
+    "https://www.petofy.com/online-pet-health-record/membership-pricing",
+    "https://petofy.com/pet-microchip-registry",
+    "https://petofy.com/VetOnCall"
+]
+
 
 def webscrape(file_path, urls):
     with open(file_path, 'w') as file:
@@ -17,3 +29,6 @@ def webscrape(file_path, urls):
                 file.write(f"Failed to retrieve the webpage {url}. Status code: {response.status_code}\n")
 
     print("Scraping completed and data has been written to 'crawled_data.txt'.")
+
+
+webscrape(file_path=scrapedataloc, urls=urls)
