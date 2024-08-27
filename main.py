@@ -18,7 +18,7 @@ def main() -> None:
     scheduler_thread = threading.Thread(target=start_scheduler, daemon=True)
     scheduler_thread.start()
 
-    parser = argparse.ArgumentParser(description="Script that processes queries using a scheduler.")
+    parser = argparse.ArgumentParser(description="Interractive chat-bot which answers user query about Petofy")
     parser.add_argument('-q', '--query', type=str, help='Query to be processed', required=False)
     args = parser.parse_args()
 
